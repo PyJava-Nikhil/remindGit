@@ -34,8 +34,9 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+UNIVERSAL_GITHUB_TOKE = os.getenv('GITHUB_TOKEN') # use this token to authenticate requests to GitHub API
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -47,6 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'reminder',
 ]
 
 MIDDLEWARE = [
@@ -128,3 +131,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+# EMAIL SETTINGS
+EMAIL_INTERVAL = 7200 # if PR creation/last email sent time is greater than this, send email. This is seconds
+SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
+EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
+SENDGRID_SANDBOX_MODE_IN_DEBUG = False
+
+# CELERY SETTINGS
+from remindGit.celery_beat import CELERY_BEAT_SCHEDULE
+BROKER_URL = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_BEAT_SCHEDULE = CELERY_BEAT_SCHEDULE
