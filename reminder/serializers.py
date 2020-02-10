@@ -1,5 +1,6 @@
 from reminder.models import GitHubAccountInfo
 from rest_framework import serializers
+from remindGit.settings import UNIVERSAL_GITHUB_TOKEN
 import requests
 
 EMAIL_ERRORS = {
@@ -30,7 +31,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         url = F'https://api.github.com/users/{username}'
         req = requests.get(url)
         if req.status_code != 200:
-            req = requests.get(url, headers={'Authorization': 'token 865216737aec6cc8340440df47e224d56571399d'})
+            req = requests.get(url, headers={'Authorization': F'token {UNIVERSAL_GITHUB_TOKEN}'})
             if req.status_code != 200:
                 raise serializers.ValidationError('GitHub user does not exist')
 

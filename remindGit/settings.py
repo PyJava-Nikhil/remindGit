@@ -34,7 +34,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-UNIVERSAL_GITHUB_TOKE = os.getenv('GITHUB_TOKEN') # use this token to authenticate requests to GitHub API
+UNIVERSAL_GITHUB_TOKEN = os.getenv('GITHUB_TOKEN') # use this token to authenticate requests to GitHub API
 
 ALLOWED_HOSTS = ['*']
 
